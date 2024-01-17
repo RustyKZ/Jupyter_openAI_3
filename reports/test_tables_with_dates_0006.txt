@@ -1,0 +1,2707 @@
+Test type: tables_with_dates
+Debug number: 0006
+Test date: 2024-01-17 00:25:06 UTC
+Temperature: 0
+Max tokens: 4000
+Top_p: 1 
+============================================================================================================================== 
+User Request: 
+------------------------------------------------------------------------------------------------------------------------------ 
+
+Show campaign name with lowest Spend / Clicks across facebook and snapchat in 2022?
+
+============================================================================================================================== 
+Response Text: 
+cutted: 
+{'data': [{'tab_id': 6, 'pros': "Contains 'spend' data and covers the year 2022.", 'freshness_date': '2023-12-28', 'score': '5', 'table_name': 'ads_placements_6937_facebook_all_data'}]}
+------------------------------------------------------------------------------------------------------------------------------ 
+full: 
+To find the campaign name with the lowest Spend / Clicks ratio across Facebook and Snapchat for the year 2022, we need to identify tables that contain data for Facebook and Snapchat with the relevant columns for "Spend" and "Clicks" and ensure that the data covers the year 2022.
+
+Let's analyze the data source to find the most suitable tables for this query.
+
+For Facebook:
+- We need a table that contains "Spend" and "Clicks" data for the year 2022.
+- The table should have a "campaign_name" column to identify the campaign.
+- The table should have "date" column data covering the year 2022.
+
+For Snapchat:
+- Similarly, we need a table that contains "Spend" and "Clicks" data for the year 2022.
+- The table should have a "campaign_name" column to identify the campaign.
+- The table should have "date" column data covering the year 2022.
+
+Based on these criteria, let's find the most suitable tables from the data source.
+
+After reviewing the data source, the following tables seem relevant:
+
+For Facebook:
+- "ads_6937_facebook_all_data" contains "spend" data but does not have "clicks" data, and its date range ends on 2023-03-10, which includes the year 2022.
+- "ads_placements_6937_facebook_all_data" contains "spend" data but does not explicitly mention "clicks" data, and its date range is from 2020-02-10 to 2023-12-28, which includes the year 2022.
+- "campaign_6937_facebook_all_data" contains "spend" data but does not explicitly mention "clicks" data, and its date range is from 2022-07-30 to 2023-01-02, which includes part of the year 2022.
+
+For Snapchat:
+- "ads_6937_snapchat_all_data" contains data for Snapchat, but it does not explicitly mention "spend" or "clicks" data, and its date range is from 2023-05-01 to 2023-10-31, which does not include the year 2022.
+
+Based on the available data, it seems that we do not have a suitable table for Snapchat that includes both "spend" and "clicks" data for the year 2022. For Facebook, we have tables with "spend" data but without explicit "clicks" data. However, we can still provide the table with "spend" data for Facebook that covers the year 2022.
+
+Here is the most suitable table for Facebook based on the available data:
+
+```json
+{
+  "data": [
+    {
+      "tab_id": 6,
+      "pros": "Contains 'spend' data and covers the year 2022.",
+      "freshness_date": "2023-12-28",
+      "score": "5",
+      "table_name": "ads_placements_6937_facebook_all_data"
+    }
+  ]
+}
+```
+
+The score is set to "5" to reflect a moderate level of confidence since the table does not contain explicit "clicks" data, and we do not have a suitable table for Snapchat.
+============================================================================================================================== 
+System_prompt: 
+------------------------------------------------------------------------------------------------------------------------------ 
+You are a Text to SQL AI assistant. 
+
+---
+1. Your task
+Your job is to identify the SQL tables from the data source that best match the user's query and display that information.
+
+---
+2. Data source
+The data source is the list of JSON objects located in this system prompt between the tags <data_source> and </data_source>. Each of these JSON objects contains a data of the fields of the SQL tables. Some JSON objects may have nested JSON objects with column information and relevant columns. Each table has a unique required field `table_name`. The table may also have optional fields `description`, `relevant_columns`, `freshness_date` and `columns`. Also, the `relevant_columns` and `columns` fields may contain lists or JSON objects with varying degrees of nesting.
+2.1 SQL table field `table_name`
+This field is unique and required for each table, so it must be used as a table identifier.
+2.2 SQL table field `description`
+This field contains a description of the table and is optional. It may be filled, it may be empty, or it may be missing. 
+2.3 SQL table field `freshness_date`
+This field contains the date the table was last updated in the format "YYYY-MM-DD" and is optional. It may be filled, it may be empty, or it may be missing.
+2.4 SQL table field `columns`
+This field is optional and contains information about the table columns as a list of one or more JSON objects.
+2.5 SQL table field `relevant_columns`
+This field is optional and contains information about this table's associated columns from other tables as a list of one or more JSON objects. It may be filled, it may be empty, or it may be missing.
+2.6 SQL table fields `actual_date_start` and `actual_date_end`
+These fields, in the format YYYY-MM-DD, contain dates that define the period of the current data contained in this table. Accordingly, the `actual_date_start` field contains the start date of the current period, and the `actual_date_end` field contains the end date of the current period.
+<example>
+{"description": "","table_name": "stg_tables_freshness_6937","freshness_date": "2023-08-21","columns": [{"description": "values from 2023-01-02 to 2023-08-21","column_name": "freshness_date","type": "Date"}],"tab_id": 96,"actual_date_start": "2023-01-02","actual_date_end": "2023-08-21"}
+Explanation: 
+The `actual_date_start` and `actual_date_end` records for this table mean that this table contains data for the period from 2023-01-02 to 2023-08-21.
+</example>
+2.7 The current real date is December 28, 2023.
+
+---
+3. Rules for forming a response
+3.1 When counting tables, you cannot count the same table more than once.
+3.2 To semantically analyze the user's request, the following data should be used in decreasing order of priority: "description", "relevant_columns", "table_name", "column_name", `actual_date_start` and `actual_date_end`; the "freshness_date" field contains the date of the last update of a specific table.
+3.3 Use only those tables that are available in the data source.
+3.4 In the table description, the words "monthly" and "weekly" reflect the granularity of the data over time. However, when a user requests information for a specific period (week, month, lifetime), you MUST NOT automatically select a table solely based on these designations in the title. You are REQUIRED to first consider the freshness of the data, the presence of suitable columns, and only then the granularity. Even if the data is presented in daily increments, you CAN and SHOULD aggregate it to obtain accurate results for the required period. Remember, choosing the most relevant data source is key to providing precise and valuable information.
+3.5 If a table contains the necessary information but requires further processing to answer the question, still consider such tables as suitable.
+3.6 "daily" data means that each row of the table contains the column values for a specific day, indicated in the `date` column.
+3.7 "monthly" data means that each row of the table contains the sum of values for a month, indicated in the `date` column.
+3.8 "weekly" data means that each row of the table contains the sum of values for a week, indicated in the `date` column.
+3.9 "last_day" data means that each row contains the sum of values for all time up to the date in the `date` column or specific properties at the time in the `date` column. This type of data is cumulative and is not suitable for queries that require filtering by specific dates or date ranges. Use "last_day" data for queries that require the most recent cumulative totals or properties.
+3.10 "last_day_incremental" data means that each row contains cumulative totals for all time up to the date in the `date` column. Use "last_day_incremental" data for queries that require the most recent cumulative totals or properties for specific date.
+3.11 If the question needs to be filtered by account name, check to see if there are any columns or relevant columns in the table that have the value "account_name"; if it doens't, then the table is not suitable.
+3.12 Many tables have a data source. Typically this is the company name in the "description" field after the words "data from" (For example: Fecebook, Google Ads, TikTok, Apple, Bing Ads, iSpot, Partnerize, Snapchat, etc.); if you have a choice between tables with the same data source, you should choose only one table with a higher granularity.
+3.13 If user explicitly mentioned table name in the question you must use it.
+3.14 In the query response, the tables must have the same granularity.
+3.15 Output must not be empty; take your best guess and find tables relevant to the question.
+3.16 Never choose tables which contains "reach" in the title. Only use it user explicity mentioned "show reach".
+3.17 While monthly granularity may seem like an initial match for a monthly data request, it is not the sole factor to consider. The most suitable table may have daily granularity, which can be aggregated to monthly data, provided that the table contains the necessary columns and is the most current and complete source of data.
+3.18 The `freshness_date` field contains the table update date in the YYYY-MM-DD format. For any user request, if a specific date is not specified, the most recent table should be selected from the corresponding response options. The current real date is indicated in paragraph 2.6. If the user's request specifies a specific time period, preference should be given to a table whose period between `actual_date_start` and `actual_date_end` includes the period specified by the user.
+3.19 Before processing the query, sort the tables by the `freshness_date` field and start selecting answers, starting with the newest table.
+3.20 If the query contains the word "expenses", "spent" or another word indicating the expenditure of funds, you need to focus on the words "spend", "spend" or "budget" in the relevant table data.
+
+---
+4. Examples of user requests and answer options (correct and incorrect)
+4.1 Example about reach tables:
+<example>
+User request: "Show please weekly revenue for Facebook for last 3 week"
+Incorrect response:
+"{"pros": "", "freshness_date": "2023-12-25"  , "score": "", "table_name": "campaign_week_reach_6937_facebook_all_data"}"
+Explanation: this response is incorrect because "week" here means granularity of data and also this table doesn't contain revenue.
+Correct response:
+"{"pros": "", "freshness_date": "2023-12-28"  , "score": "", "table_name": "ads_placements_6937_facebook_all_data"}"
+Explanation: this response is correct because daily granularity is great choose, and also contains revenue and also table is a fresh!
+</example>
+4.2 Examples about freshness: 
+<example>
+User request: "What was our spend on Facebook in the first half of 2023?"
+Incorrect response:
+"{"pros": "", "freshness_date": "2023-03-10", "score": "", "table_name": "ads_6937_facebook_all_data"}"
+Explanation: This is an incorrect response because the requested time period is from January 1 to June 30, 2023, and the update date for this table is March 10, 2023 ("freshness_date":"2023-03-10"). Obviously, this table cannot contain all the required data. This is contrary to rule 3.18.
+Correct response: 
+"{"pros": "", "freshness_date": "2023-12-28", "score": "", "table_name": "ads_placements_6937_facebook_all_data"}"
+Explanation: This is the correct response because the time period requested is January 1 to June 30, 2023, and the update date for this table is December 28, 2023 ("freshness_date": "2023-12-28"). To find the required table, use only those tables whose update date is after the specified period. This table is the most recent of all relevant ones. This is in accordance with Rule 3.18.
+</example>
+one more example:
+<example>
+Question: What was our spend for 2023 Q1 for Facebook, Google and TikTok by month? 
+Incorrect response:
+{"tab_id": "", ""pros": "", "freshness_date": "2023-01-02", "score": "", "table_name": "ads_creative_6937_facebook_all_data"}, 
+{"tab_id": "", "pros": "", "freshness_date": "2023-04-15", "score": "", "table_name": ads_6937_google_ads_ql_all_data"}, 
+{"tab_id": "", "pros": "", "freshness_date": "2022-12-28", "score": "", "table_name": "ads_6937_tiktok_ads_all_data"}
+Explanation: This is an incorrect answer, since the tables found are for Google and Facebook are not the most recent relevant ones. This is contrary to rule 3.18.
+Correct response:
+{"tab_id": "", "pros": "", "freshness_date":"2023-12-28", "score": "", "table_name": "ads_placements_6937_facebook_all_data"}, 
+{"tab_id": "", "pros": "", "freshness_date":"2023-12-28", "score": "", "table_name": "campaign_6937_google_ads_ql_all_data"}, 
+{"tab_id": "", "pros": "", "freshness_date":"2023-12-28", "score": "", "table_name": "ads_6937_tiktok_ads_all_data"}
+Explanation: The tables found are the most recent of all relevant ones. This is in accordance with Rule 3.18.
+</example>
+
+It's just examples. You must apply the same logic in the actual user question and the list of different tables.
+
+---
+5. Algorithm of actions
+When processing a request and generating a response, you should adhere to this algorithm:
+5.1 Semantic analysis of user request.
+5.2 Generating a preliminary list of tables that satisfy the user’s request and guideline points 3.1 - 3.20.
+5.3 Checking the preliminary list of suitable answers for compliance with clause 11 of the guideline. If necessary, reduce the preliminary list in accordance with the recommendation of clause 11 of the guideline.
+5.4 Generate JSON from the obtained results in the specified format:
+{
+"data": [
+{"tab_id": TAB_ID, "pros": PROS, "freshness_date": FRESHNESS_DATE, "score": SCORE, "table_name": TABLE_NAME},
+...
+{"tab_id": TAB_ID_n, "pros": PROS_n, "freshness_date": FRESHNESS_DATE_n, "score": SCORE_n, "table_name": TABLE_NAME_n},
+]
+}, 
+where:
+`TAB_ID` - table ID number (here is the date value from the 'tab_id' field of the original table);
+`PROS` - represent the advantages of the chosen table;
+`FRESHNESS_DATE` - that table was last update (here is the date value from the 'freshness_date' field of the original table);
+`TABLE_NAME` - name of the table (here is the date value from the 'table_name' field of the original table);
+`SCORE` is a value from 1 to 10 indicating your confidence level.
+When generating this JSON, it is necessary to strictly ensure that the data for the 'table_name' and 'freshness_date' fields are taken from the corresponding 'table_name' and 'freshness_date' fields of the corresponding table of the original data source. 
+
+---
+
+<data_source>
+[
+  {
+    "description": "daily data from Apple Search Ads across Ads",
+    "table_name": "ads_6937_apple_search_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "local_spend_currency"
+      },
+      {
+        "column_name": "local_spend_amount"
+      },
+      {
+        "column_name": "__account_id"
+      },
+      {
+        "column_name": "account_name"
+      },
+      {
+        "column_name": "date"
+      },
+      {
+        "column_name": "avg_cpt"
+      },
+      {
+        "column_name": "avg_cpa"
+      },
+      {
+        "column_name": "local_spend_currency"
+      },
+      {
+        "column_name": "local_spend_amount"
+      },
+      {
+        "column_name": "__account_id"
+      },
+      {
+        "column_name": "account_name"
+      },
+      {
+        "column_name": "date"
+      },
+      {
+        "column_name": "avg_cpt"
+      },
+      {
+        "column_name": "avg_cpa"
+      },
+      {
+        "column_name": "local_spend_currency"
+      },
+      {
+        "column_name": "local_spend_amount"
+      },
+      {
+        "column_name": "__account_id"
+      },
+      {
+        "column_name": "account_name"
+      },
+      {
+        "column_name": "date"
+      },
+      {
+        "column_name": "avg_cpt"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-04-01 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-05-23 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 1,
+    "actual_date_start": "2023-04-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Facebook across Ads",
+    "table_name": "ads_6937_facebook_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "campaign_name",
+        "values_examples": [
+          "iOS-Facebook_Instagram-App_Remarketing_Conversions-Q3_2020_Incremental",
+          "Facebook_Traffic_Prospecting_All_Web_Spring Apparel",
+          "Droid-Facebook_Instagram-App_Remarketing_Conversions-Q3_2020_Incremental"
+        ]
+      },
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "catalog_mobile_purchase_value_7d_click"
+      },
+      {
+        "column_name": "purchase_total_value_7d_click"
+      }
+    ],
+    "freshness_date": "2023-03-10",
+    "columns": [
+      {
+        "description": "values from 2021-02-10 to 2023-03-10",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2022-09-28 to 2023-03-10",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 2,
+    "actual_date_start": "2021-02-10",
+    "actual_date_end": "2023-03-10"
+  },
+  {
+    "description": "daily data from TikTok Ads across Ads",
+    "table_name": "ads_6937_tiktok_ads_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "search"
+      },
+      {
+        "column_name": "total_purchase_value"
+      },
+      {
+        "column_name": "cost"
+      },
+      {
+        "column_name": "total_purchase"
+      },
+      {
+        "column_name": "total_pageview"
+      },
+      {
+        "column_name": "skan_total_purchase_value"
+      },
+      {
+        "column_name": "total_landing_page_view"
+      },
+      {
+        "column_name": "total_checkout_value"
+      },
+      {
+        "column_name": "skan_total_purchase"
+      },
+      {
+        "column_name": "total_button_click_value"
+      },
+      {
+        "column_name": "video_views_75"
+      },
+      {
+        "column_name": "__account_id"
+      },
+      {
+        "column_name": "spend_credit"
+      },
+      {
+        "column_name": "in_app_ad_click"
+      },
+      {
+        "column_name": "product_details_page_browse"
+      },
+      {
+        "column_name": "total_view_content_value"
+      },
+      {
+        "column_name": "date"
+      },
+      {
+        "column_name": "video_views_50"
+      },
+      {
+        "column_name": "account_name"
+      },
+      {
+        "column_name": "details_page_browse_app_download"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2022-03-10 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-04-17 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 3,
+    "actual_date_start": "2022-03-10",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Facebook across Ads Creative",
+    "table_name": "ads_creative_6937_facebook_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "search_total_7d_click"
+      },
+      {
+        "column_name": "search_total"
+      },
+      {
+        "column_name": "catalog_purchase_total_value_7d_click"
+      },
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "search_7d_click"
+      },
+      {
+        "column_name": "purchase_total_7d_click"
+      },
+      {
+        "column_name": "catalog_mobile_purchase_value_7d_click"
+      },
+      {
+        "column_name": "catalog_website_purchase_value_7d_click"
+      },
+      {
+        "column_name": "search"
+      },
+      {
+        "column_name": "catalog_view_content_total_value_7d_click"
+      },
+      {
+        "column_name": "catalog_view_content_total_7d_click"
+      },
+      {
+        "column_name": "omni_search_7d_click"
+      },
+      {
+        "column_name": "fb_mobile_purchase_7d_click"
+      },
+      {
+        "column_name": "catalog_purchase_total_7d_click"
+      },
+      {
+        "column_name": "catalog_omni_purchase_value_7d_click"
+      },
+      {
+        "column_name": "revenue_click_through"
+      },
+      {
+        "column_name": "all_clicks"
+      },
+      {
+        "column_name": "fb_pixel_add_to_cart_value_7d_click"
+      },
+      {
+        "column_name": "catalog_add_to_cart_total_value_7d_click"
+      },
+      {
+        "column_name": "purchase_value_7d_click"
+      }
+    ],
+    "freshness_date": "2023-01-02",
+    "columns": [
+      {
+        "description": "values from 2022-09-21 to 2023-01-02",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-07-23 to 2023-01-02",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 4,
+    "actual_date_start": "2022-07-23",
+    "actual_date_end": "2023-01-02"
+  },
+  {
+    "description": "daily data from TikTok Ads across Ads DMA",
+    "table_name": "ads_dma_6937_tiktok_ads_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "adgroup_name",
+        "values_examples": [
+          "August Reach Boosting Ads"
+        ]
+      },
+      {
+        "column_name": "campaign_name",
+        "values_examples": [
+          "TikTok_Acquisition_Prospecting_Traffic_All_Web_Evergreen"
+        ]
+      },
+      {
+        "column_name": "cost"
+      },
+      {
+        "column_name": "__account_id"
+      },
+      {
+        "column_name": "account_name"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2022-03-17 to 2023-12-27",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-03-08 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 5,
+    "actual_date_start": "2022-03-17",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Facebook across Ads Placements",
+    "table_name": "ads_placements_6937_facebook_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "search_7d_click"
+      },
+      {
+        "column_name": "catalog_purchase_total_7d_click"
+      },
+      {
+        "column_name": "catalog_purchase_total_value_7d_click"
+      },
+      {
+        "column_name": "dynamic_assisted_google_search_custom_conversion_7d_click"
+      },
+      {
+        "column_name": "dynamic_assisted_bing_search_custom_conversion_7d_click"
+      },
+      {
+        "column_name": "dynamic_taf_purchases_v2_7d_click"
+      },
+      {
+        "column_name": "search_1dv_7dc"
+      },
+      {
+        "column_name": "catalog_view_content_total_7d_click"
+      },
+      {
+        "column_name": "catalog_mobile_purchase_value_7d_click"
+      },
+      {
+        "column_name": "dynamic_ios_first_purchase_7d_click_value"
+      },
+      {
+        "column_name": "dynamic_taf_purchases_7d_click_value"
+      },
+      {
+        "column_name": "dynamic_assisted_google_search_custom_conversion_7d_click_value"
+      },
+      {
+        "column_name": "dynamic_first_purchase_ios_7d_click_value"
+      },
+      {
+        "column_name": "dynamic_assisted_google_search_custom_conversion"
+      },
+      {
+        "column_name": "dynamic_assisted_bing_search_custom_conversion"
+      },
+      {
+        "column_name": "catalog_website_purchase_value_7d_click"
+      },
+      {
+        "column_name": "catalog_view_content_total_value_7d_click"
+      },
+      {
+        "column_name": "dynamic_careplus_purchase_7d_click"
+      },
+      {
+        "column_name": "catalog_mobile_purchase_7d_click"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2020-02-10 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-03-10 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 6,
+    "actual_date_start": "2020-02-10",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Apple Search Ads across Adsets Device",
+    "table_name": "adsets_device_6937_apple_search_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "__account_id"
+      },
+      {
+        "column_name": "spend_currency"
+      },
+      {
+        "column_name": "account_name"
+      },
+      {
+        "column_name": "date"
+      },
+      {
+        "column_name": "ad_group_id"
+      },
+      {
+        "column_name": "ad_group_name"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-05-01 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-05-30 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 7,
+    "actual_date_start": "2023-05-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Facebook across Campaign",
+    "table_name": "campaign_6937_facebook_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "search_7d_click"
+      },
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "daily_budget"
+      },
+      {
+        "column_name": "fb_mobile_purchase_7d_click"
+      },
+      {
+        "column_name": "purchase_value_7d_click"
+      },
+      {
+        "column_name": "search"
+      },
+      {
+        "column_name": "lifetime_budget"
+      }
+    ],
+    "freshness_date": "2023-01-02",
+    "columns": [
+      {
+        "description": "values from 2022-09-28 to 2023-01-02",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-07-30 to 2023-01-02",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 8,
+    "actual_date_start": "2022-07-30",
+    "actual_date_end": "2023-01-02"
+  },
+  {
+    "description": "daily data from Google Ads across Campaign",
+    "table_name": "campaign_6937_google_ads_ql_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "budget_total_amount"
+      },
+      {
+        "column_name": "all_conv__direct_organic_site_visits"
+      },
+      {
+        "column_name": "budget_amount"
+      },
+      {
+        "column_name": "all_conv__tune_in_video_plays"
+      },
+      {
+        "column_name": "conv__website_visits_90_d__924cd77bd__backed_on_dcm_floodlight_"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2022-09-28 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-06-29 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 9,
+    "actual_date_start": "2022-06-29",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "last_day data from Google Ads across Campaign Lifetime Reach",
+    "table_name": "campaign_lifetime_reach_6937_google_ads_ql_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "search_lost_top_is_budget"
+      },
+      {
+        "column_name": "search_lost_is_budget"
+      },
+      {
+        "column_name": "search_lost_abs_top_is_budget"
+      },
+      {
+        "column_name": "search_top_is"
+      },
+      {
+        "column_name": "search_lost_top_is_budget"
+      },
+      {
+        "column_name": "search_lost_is_budget"
+      },
+      {
+        "column_name": "search_lost_abs_top_is_budget"
+      },
+      {
+        "column_name": "search_top_is"
+      },
+      {
+        "column_name": "search_lost_top_is_budget"
+      },
+      {
+        "column_name": "search_lost_is_budget"
+      },
+      {
+        "column_name": "search_lost_abs_top_is_budget"
+      },
+      {
+        "column_name": "search_top_is"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-12-28 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-12-28 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 10,
+    "actual_date_start": "2023-12-28",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "last_day_incremental data from TikTok Ads across Campaign Lifetime Reach",
+    "table_name": "campaign_lifetime_reach_6937_tiktok_ads_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "campaign_name",
+        "values_examples": [
+          "TikTok_Acquisition_Prospecting_Traffic_All_Web_Evergreen"
+        ]
+      },
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "clicks"
+      },
+      {
+        "column_name": "date"
+      },
+      {
+        "column_name": "account_name"
+      },
+      {
+        "column_name": "__account_id"
+      },
+      {
+        "column_name": "date_yyyymmdd"
+      },
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "clicks"
+      },
+      {
+        "column_name": "date"
+      },
+      {
+        "column_name": "account_name"
+      },
+      {
+        "column_name": "__account_id"
+      },
+      {
+        "column_name": "date_yyyymmdd"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-02-08 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-02-08 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 11,
+    "actual_date_start": "2023-02-08",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "monthly data from Facebook across Campaign Month Reach",
+    "table_name": "campaign_month_reach_6937_facebook_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "search"
+      }
+    ],
+    "freshness_date": "2023-12-01",
+    "columns": [
+      {
+        "description": "values from 2023-05-01 to 2023-12-01",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-01-01 to 2023-12-01",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 12,
+    "actual_date_start": "2023-01-01",
+    "actual_date_end": "2023-12-01"
+  },
+  {
+    "description": "monthly data from TikTok Ads across Campaign Month Reach",
+    "table_name": "campaign_month_reach_6937_tiktok_ads_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "campaign_name",
+        "values_examples": [
+          "TikTok_Acquisition_Prospecting_Traffic_All_Web_Evergreen"
+        ]
+      },
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "clicks"
+      },
+      {
+        "column_name": "__account_id"
+      },
+      {
+        "column_name": "date"
+      },
+      {
+        "column_name": "account_name"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-03-20 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-02-01 to 2023-12-01",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 13,
+    "actual_date_start": "2023-02-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "weekly data from TikTok Ads across Campaign Week Reach",
+    "table_name": "campaign_week_reach_6937_tiktok_ads_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "campaign_name",
+        "values_examples": [
+          "TikTok_Acquisition_Prospecting_Traffic_All_Web_Evergreen"
+        ]
+      },
+      {
+        "column_name": "spend"
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-03-20 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-01-30 to 2023-12-25",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 14,
+    "actual_date_start": "2023-01-30",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Facebook across Device By Campaign",
+    "table_name": "device_by_campaign_6937_facebook_all_data",
+    "relevant_columns": [
+      {
+        "column_name": "spend"
+      },
+      {
+        "column_name": "fb_mobile_spent_credits_1dv_7dc"
+      }
+    ],
+    "freshness_date": "2023-09-21",
+    "columns": [
+      {
+        "description": "values from 2023-08-21 to 2023-09-21",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-09-05 to 2023-09-21",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 15,
+    "actual_date_start": "2023-08-21",
+    "actual_date_end": "2023-09-21"
+  },
+  {
+    "description": "",
+    "table_name": "extraction_logs",
+    "relevant_columns": [
+      {
+        "column_name": "datasource_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Google Ads",
+          "Bing Ads (Microsoft Advertising)"
+        ]
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2022-09-21 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-09-21 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 1970-01-01 to 2023-12-28",
+        "column_name": "data_value_date_to",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2022-09-21 to 2023-12-28",
+        "column_name": "event_time",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 1970-01-01 to 2023-12-28",
+        "column_name": "data_value_date_from",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 16,
+    "actual_date_start": "1970-01-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "mcdm_datasources",
+    "relevant_columns": [
+      {
+        "column_name": "name",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Google Search Ads 360",
+          "Google Ads",
+          "Pinterest Ads",
+          "Bing Ads (Microsoft Advertising)",
+          "Google Ad Manager",
+          "Google Display & Video 360"
+        ]
+      },
+      {
+        "column_name": "sfdc_uniquename",
+        "values_examples": [
+          "facebook_ads"
+        ]
+      }
+    ],
+    "tab_id": 17
+  },
+  {
+    "description": "",
+    "table_name": "mrt_ai_assistant_meta_columns",
+    "relevant_columns": [
+      {
+        "column_name": "table_description",
+        "values_examples": [
+          "daily data from Apple Search Ads across Ads",
+          "daily data from TikTok Ads across Ads",
+          "monthly data from TikTok Ads across Campaign Month Reach",
+          "daily data from Apple Search Ads across Adsets Device",
+          "weekly data from TikTok Ads across Campaign Week Reach",
+          "daily data from Facebook across Ads",
+          "daily data from Google Ads across Campaign",
+          "daily data from Google Ads across Ads"
+        ]
+      },
+      {
+        "column_name": "table_name",
+        "values_examples": [
+          "campaign_month_reach_6937_tiktok_ads_all_data",
+          "ads_6937_apple_search_all_data",
+          "campaign_lifetime_reach_6937_tiktok_ads_all_data",
+          "adsets_device_6937_apple_search_all_data",
+          "campaign_week_reach_6937_tiktok_ads_all_data"
+        ]
+      }
+    ],
+    "freshness_date": "2023-12-27",
+    "columns": [
+      {
+        "description": "values from 2023-11-28 to 2023-12-27",
+        "column_name": "column_updated_at",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 18,
+    "actual_date_start": "2023-11-28",
+    "actual_date_end": "2023-12-27"
+  },
+  {
+    "description": "",
+    "table_name": "mrt_ai_assistant_meta_tables",
+    "relevant_columns": [
+      {
+        "column_name": "table_description",
+        "values_examples": [
+          "daily data from Apple Search Ads across Ads",
+          "daily data from TikTok Ads across Ads",
+          "monthly data from TikTok Ads across Campaign Month Reach",
+          "daily data from Apple Search Ads across Adsets Device",
+          "weekly data from TikTok Ads across Campaign Week Reach",
+          "daily data from Facebook across Ads",
+          "daily data from Google Ads across Campaign",
+          "daily data from Google Ads across Ads"
+        ]
+      },
+      {
+        "column_name": "datasource_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Google Ads",
+          "Bing Ads (Microsoft Advertising)"
+        ]
+      },
+      {
+        "column_name": "table_name",
+        "values_examples": [
+          "campaign_month_reach_6937_tiktok_ads_all_data",
+          "ads_6937_apple_search_all_data",
+          "campaign_lifetime_reach_6937_tiktok_ads_all_data",
+          "adsets_device_6937_apple_search_all_data",
+          "campaign_week_reach_6937_tiktok_ads_all_data"
+        ]
+      },
+      {
+        "column_name": "report_type_title",
+        "values_examples": [
+          "Ads Month Reach"
+        ]
+      }
+    ],
+    "freshness_date": "2023-12-27",
+    "columns": [
+      {
+        "description": "values from 2022-09-21 to 2023-12-27",
+        "column_name": "freshness",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2022-09-21 to 2023-12-27",
+        "column_name": "schema_updated_at",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 19,
+    "actual_date_start": "2022-09-21",
+    "actual_date_end": "2023-12-27"
+  },
+  {
+    "description": "",
+    "table_name": "report_accounts",
+    "relevant_columns": [
+      {
+        "column_name": "dsas_data_source_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Google Ads",
+          "Bing Ads (Microsoft Advertising)"
+        ]
+      }
+    ],
+    "freshness_date": "2023-12-15",
+    "columns": [
+      {
+        "description": "values from 2022-09-15 to 2023-12-15",
+        "column_name": "created_at",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 20,
+    "actual_date_start": "2022-09-15",
+    "actual_date_end": "2023-12-15"
+  },
+  {
+    "description": "",
+    "table_name": "rows_stats_6937_improvado",
+    "relevant_columns": [
+      {
+        "column_name": "datasource_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Google Ads",
+          "Bing Ads (Microsoft Advertising)"
+        ]
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2022-09-21 to 2023-12-28",
+        "column_name": "insert_time",
+        "type": "DateTime64(3)"
+      },
+      {
+        "description": "values from 2022-09-21 to 2023-12-28",
+        "column_name": "load_date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 21,
+    "actual_date_start": "2022-09-21",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "stg_data_dictionary",
+    "relevant_columns": [
+      {
+        "column_name": "datasource_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Google Search Ads 360",
+          "Google Ads",
+          "Pinterest Ads",
+          "Bing Ads (Microsoft Advertising)",
+          "Google Ad Manager",
+          "Google Display & Video 360"
+        ]
+      },
+      {
+        "column_name": "dsas_datasource_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Facebook Ads",
+          "Google Search Ads 360",
+          "Google Ads",
+          "Pinterest Ads",
+          "Bing Ads (Microsoft Advertising)",
+          "Google Ad Manager"
+        ]
+      },
+      {
+        "column_name": "field_request_name",
+        "values_examples": [
+          "Advertiser Spent",
+          "AverageCpc"
+        ]
+      },
+      {
+        "column_name": "field_title",
+        "values_examples": [
+          "Advertiser Spent",
+          "Revenue Per Click",
+          "Ad Clicks",
+          "Google Ads conversions",
+          "Ad Group Budget In Impressions",
+          "Ad Group Daily Target In Impressions",
+          "Total clicks",
+          "Ad Group Daily Cap In Impressions"
+        ]
+      },
+      {
+        "column_name": "field_response_name",
+        "values_examples": [
+          "Advertiser Spent",
+          "Revenue Per Click",
+          "Ad Group Budget In Impressions",
+          "Ad Group Daily Target In Impressions",
+          "AverageCpc",
+          "Ad Group Daily Cap In Impressions"
+        ]
+      },
+      {
+        "column_name": "field_name",
+        "values_examples": [
+          "Advertiser Spent",
+          "Revenue Per Click",
+          "Ad Group Budget In Impressions",
+          "Ad Group Daily Target In Impressions",
+          "AverageCpc",
+          "Ad Group Daily Cap In Impressions",
+          "Click-through Revenue"
+        ]
+      },
+      {
+        "column_name": "datasource_categories",
+        "values_examples": [
+          "['Google','Advertising']"
+        ]
+      },
+      {
+        "column_name": "field_sql_name",
+        "values_examples": [
+          "advertiser_spent"
+        ]
+      },
+      {
+        "column_name": "datasource_sfdc_uniquename",
+        "values_examples": [
+          "facebook_ads"
+        ]
+      },
+      {
+        "column_name": "report_type_title",
+        "values_examples": [
+          "Organic Search Google Play"
+        ]
+      },
+      {
+        "column_name": "extract_template_title",
+        "values_examples": [
+          "Organic Search Google Play"
+        ]
+      }
+    ],
+    "freshness_date": "2023-12-19",
+    "columns": [
+      {
+        "description": "values from 2020-11-30 to 2023-12-19",
+        "column_name": "field_created_at",
+        "type": "DateTime64(3)"
+      },
+      {
+        "description": "values from 2020-11-30 to 2023-12-19",
+        "column_name": "field_updated_at",
+        "type": "DateTime64(3)"
+      },
+      {
+        "description": "values from 2020-09-07 to 2023-12-12",
+        "column_name": "report_type_created_at",
+        "type": "DateTime64(3)"
+      },
+      {
+        "description": "values from 2023-10-12 to 2023-12-19",
+        "column_name": "report_type_updated_at",
+        "type": "DateTime64(3)"
+      }
+    ],
+    "tab_id": 22,
+    "actual_date_start": "2020-09-07",
+    "actual_date_end": "2023-12-19"
+  },
+  {
+    "description": "",
+    "table_name": "stg_extraction_logs",
+    "relevant_columns": [
+      {
+        "column_name": "datasource_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Google Ads",
+          "Bing Ads (Microsoft Advertising)"
+        ]
+      },
+      {
+        "column_name": "extract_template_title",
+        "values_examples": [
+          "Ads Month Reach"
+        ]
+      }
+    ],
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2022-09-21 to 2023-12-28",
+        "column_name": "event_time",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-09-21 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 1970-01-01 to 2023-12-28",
+        "column_name": "data_value_date_from",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2022-09-21 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 1970-01-01 to 2023-12-28",
+        "column_name": "data_value_date_to",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 23,
+    "actual_date_start": "1970-01-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "stg_fields_description",
+    "relevant_columns": [
+      {
+        "column_name": "description",
+        "values_examples": [
+          "represent spend in Paid Ads",
+          "represent spend in Paid Ads, represent spend in Paid Ads Google Analytics, represent spend in Paid Social",
+          "represent spend in Paid Ads, represent spend in Cross Channel",
+          "represent spend in Paid Ads, represent spend in Attribution, represent spend in Paid Search, represent spend in Cross Channel",
+          "represent spend in Paid Ads, represent spend in Attribution, represent spend in Cross Channel",
+          "represent revenue in Paid Search",
+          "represent spend in Paid Ads, represent spend in Cross Channel, represent spend in Attribution",
+          "represent spend in Email Marketing"
+        ]
+      }
+    ],
+    "tab_id": 24
+  },
+  {
+    "description": "",
+    "table_name": "stg_report_types",
+    "relevant_columns": [
+      {
+        "column_name": "datasource_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Google Search Ads 360",
+          "Google Ads",
+          "Pinterest Ads",
+          "Bing Ads (Microsoft Advertising)",
+          "Google Ad Manager",
+          "Google Display & Video 360"
+        ]
+      },
+      {
+        "column_name": "dsas_datasource_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Facebook Ads",
+          "Google Search Ads 360",
+          "Google Ads",
+          "Pinterest Ads",
+          "Bing Ads (Microsoft Advertising)",
+          "Google Ad Manager"
+        ]
+      },
+      {
+        "column_name": "report_type_title",
+        "values_examples": [
+          "Paid Search Campaigns",
+          "Adwords Campaign",
+          "Ads Month Reach",
+          "Adwords Source Medium",
+          "GA Adwords",
+          "Bing Searches",
+          "Ads Activities",
+          "Ads Device Keywords"
+        ]
+      },
+      {
+        "column_name": "datasource_categories",
+        "values_examples": [
+          "['Google','Social','Advertising']",
+          "['Google','Advertising']"
+        ]
+      },
+      {
+        "column_name": "datasource_iname",
+        "values_examples": [
+          "video_adwords"
+        ]
+      },
+      {
+        "column_name": "datasource_sfdc_uniquename",
+        "values_examples": [
+          "facebook_ads"
+        ]
+      }
+    ],
+    "freshness_date": "2023-12-19",
+    "columns": [
+      {
+        "description": "values from 2023-10-12 to 2023-12-19",
+        "column_name": "report_type_updated_at",
+        "type": "DateTime64(3)"
+      },
+      {
+        "description": "values from 2020-09-07 to 2023-12-19",
+        "column_name": "report_type_created_at",
+        "type": "DateTime64(3)"
+      }
+    ],
+    "tab_id": 25,
+    "actual_date_start": "2020-09-07",
+    "actual_date_end": "2023-12-19"
+  },
+  {
+    "description": "",
+    "table_name": "tables_meta_6937",
+    "relevant_columns": [
+      {
+        "column_name": "table_description",
+        "values_examples": [
+          "daily data from Apple Search Ads across Ads",
+          "daily data from TikTok Ads across Ads",
+          "monthly data from TikTok Ads across Campaign Month Reach",
+          "daily data from Apple Search Ads across Adsets Device",
+          "weekly data from TikTok Ads across Campaign Week Reach",
+          "daily data from Facebook across Ads",
+          "daily data from Google Ads across Campaign",
+          "daily data from Google Ads across Ads"
+        ]
+      },
+      {
+        "column_name": "datasource_title",
+        "values_examples": [
+          "Apple Search Ads",
+          "TikTok Ads",
+          "Google Ads",
+          "Bing Ads (Microsoft Advertising)"
+        ]
+      },
+      {
+        "column_name": "report_type_title",
+        "values_examples": [
+          "Ads Month Reach"
+        ]
+      }
+    ],
+    "tab_id": 26
+  },
+  {
+    "description": "daily data from Google Ads across Ad Group Ad",
+    "table_name": "ad_group_ad_6937_google_ads_ql_all_data",
+    "freshness_date": "2023-03-17",
+    "columns": [
+      {
+        "description": "values from 2023-03-02 to 2023-03-17",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-01-31 to 2023-03-16",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 27,
+    "actual_date_start": "2023-01-31",
+    "actual_date_end": "2023-03-17"
+  },
+  {
+    "description": "daily data from The Trade Desk Api across Adgroup Performance",
+    "table_name": "adgroup_performance_6937_ttd_api_all_data",
+    "freshness_date": "2023-03-06",
+    "columns": [
+      {
+        "description": "values from 2022-12-18 to 2023-03-05",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-02-16 to 2023-03-06",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 28,
+    "actual_date_start": "2022-12-18",
+    "actual_date_end": "2023-03-06"
+  },
+  {
+    "description": "daily data from Google Ads across Adgroups",
+    "table_name": "adgroups_6937_google_ads_ql_all_data",
+    "freshness_date": "2023-03-17",
+    "columns": [
+      {
+        "description": "values from 2022-12-09 to 2023-03-16",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-02-07 to 2023-03-17",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 29,
+    "actual_date_start": "2022-12-09",
+    "actual_date_end": "2023-03-17"
+  },
+  {
+    "description": "daily data from Google Ads across Ads",
+    "table_name": "ads_6937_google_ads_ql_all_data",
+    "freshness_date": "2023-04-15",
+    "columns": [
+      {
+        "description": "values from 2023-02-07 to 2023-04-15",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-12-09 to 2023-03-16",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 30,
+    "actual_date_start": "2022-12-09",
+    "actual_date_end": "2023-04-15"
+  },
+  {
+    "description": "daily data from Snapchat Ads across Ads",
+    "table_name": "ads_6937_snapchat_all_data",
+    "freshness_date": "2023-10-31",
+    "columns": [
+      {
+        "description": "values from 2023-05-01 to 2023-10-29",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-06-14 to 2023-10-31",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 31,
+    "actual_date_start": "2023-05-01",
+    "actual_date_end": "2023-10-31"
+  },
+  {
+    "description": "daily data from Bing Ads (Microsoft Advertising) across Ads By Device Type",
+    "table_name": "ads_by_devicetype_6937_bing_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-05-31 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-04-01 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 32,
+    "actual_date_start": "2023-04-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Google Ads across Ads Device",
+    "table_name": "ads_device_6937_google_ads_ql_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2019-01-01 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2022-09-28 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 33,
+    "actual_date_start": "2019-01-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Google Ads across Ads Device Conversions",
+    "table_name": "ads_device_conversions_6937_google_ads_ql_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-03-27 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-01-01 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 34,
+    "actual_date_start": "2022-01-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "monthly data from Facebook across Ads Month Reach",
+    "table_name": "ads_month_reach_6937_facebook_all_data",
+    "freshness_date": "2023-01-02",
+    "columns": [
+      {
+        "description": "values from 2022-07-01 to 2023-01-01",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2022-09-28 to 2023-01-02",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 35,
+    "actual_date_start": "2022-07-01",
+    "actual_date_end": "2023-01-02"
+  },
+  {
+    "description": "daily data from Bing Ads (Microsoft Advertising) across Ads with description goal",
+    "table_name": "ads_with_description_goal_6937_bing_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-05-02 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-03-03 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 36,
+    "actual_date_start": "2023-03-03",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "ai_weekly_insights_ai",
+    "tab_id": 37
+  },
+  {
+    "description": "daily data from The Trade Desk Api across Basic Performance",
+    "table_name": "basic_performance_6937_ttd_api_all_data",
+    "freshness_date": "2023-03-06",
+    "columns": [
+      {
+        "description": "values from 2022-12-18 to 2023-03-05",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-02-16 to 2023-03-06",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 38,
+    "actual_date_start": "2022-12-18",
+    "actual_date_end": "2023-03-06"
+  },
+  {
+    "description": "daily data from The Trade Desk Api across Browsers",
+    "table_name": "browsers_6937_ttd_api_all_data",
+    "freshness_date": "2023-03-07",
+    "columns": [
+      {
+        "description": "values from 2023-02-16 to 2023-03-07",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-02-13 to 2023-03-05",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 39,
+    "actual_date_start": "2023-02-13",
+    "actual_date_end": "2023-03-07"
+  },
+  {
+    "description": "daily data from Criteo across Campaign Category",
+    "table_name": "campaign_category_6937_criteo_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-06-14 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-04-15 to 2023-12-27",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 40,
+    "actual_date_start": "2023-04-15",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "weekly data from Facebook across Campaign Week Reach",
+    "table_name": "campaign_week_reach_6937_facebook_all_data",
+    "freshness_date": "2023-12-25",
+    "columns": [
+      {
+        "description": "values from 2023-05-01 to 2023-12-25",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-12-26 to 2023-12-25",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 41,
+    "actual_date_start": "2022-12-26",
+    "actual_date_end": "2023-12-25"
+  },
+  {
+    "description": "daily data from The Trade Desk Api across Campaigns By Hour",
+    "table_name": "campaigns_by_hour_6937_ttd_api_all_data",
+    "freshness_date": "2023-03-09",
+    "columns": [
+      {
+        "description": "values from 2023-02-01 to 2023-03-07",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-03-06 to 2023-03-09",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 42,
+    "actual_date_start": "2023-02-01",
+    "actual_date_end": "2023-03-09"
+  },
+  {
+    "description": "",
+    "table_name": "cardlytics_adstock_a6937_6937_sftp_all_data",
+    "freshness_date": "2023-05-25",
+    "columns": [
+      {
+        "description": "values from 2023-03-02 to 2023-05-25",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-06-11 to 2023-05-07",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 43,
+    "actual_date_start": "2022-06-11",
+    "actual_date_end": "2023-05-25"
+  },
+  {
+    "description": "",
+    "table_name": "cardlytics_mmm_a6937_6937_sftp_all_data",
+    "freshness_date": "2023-05-03",
+    "columns": [
+      {
+        "description": "values from 2023-03-02 to 2023-05-03",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-06-11 to 2023-05-02",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 44,
+    "actual_date_start": "2022-06-11",
+    "actual_date_end": "2023-05-03"
+  },
+  {
+    "description": "daily data from Partnerize across commissions",
+    "table_name": "commissions_6937_partnerize_all_data",
+    "freshness_date": "2023-02-06",
+    "columns": [
+      {
+        "description": "values from 2023-02-06 to 2023-02-06",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-02-06 to 2023-02-06",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 45,
+    "actual_date_start": "2023-02-06",
+    "actual_date_end": "2023-02-06"
+  },
+  {
+    "description": "last_day data from Partnerize across Commissions Entity",
+    "table_name": "commissions_entity_6937_partnerize_all_data",
+    "freshness_date": "2023-01-02",
+    "columns": [
+      {
+        "description": "values from 2023-01-02 to 2023-01-02",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-01-02 to 2023-01-02",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 46,
+    "actual_date_start": "2023-01-02",
+    "actual_date_end": "2023-01-02"
+  },
+  {
+    "description": "daily data from Partnerize across Conversion Item",
+    "table_name": "conversion_item_6937_partnerize_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2022-10-18 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2022-11-18 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 47,
+    "actual_date_start": "2022-10-18",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "conversion_pixel_names_custom_6937_ttd_api_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-04-28 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-01-01 to 2023-12-27",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 48,
+    "actual_date_start": "2022-01-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "last_day data from iSpot across Conversion Types",
+    "table_name": "conversion_types_6937_ispot_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-12-28 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-12-28 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 49,
+    "actual_date_start": "2023-12-28",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Google Ads across Conversions",
+    "table_name": "conversions_6937_google_ads_ql_all_data",
+    "freshness_date": "2023-03-17",
+    "columns": [
+      {
+        "description": "values from 2023-01-31 to 2023-03-16",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-03-02 to 2023-03-17",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 50,
+    "actual_date_start": "2023-01-31",
+    "actual_date_end": "2023-03-17"
+  },
+  {
+    "description": "",
+    "table_name": "costs_custom_6937_ttd_api_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-03-27 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2021-06-14 to 2023-12-27",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 51,
+    "actual_date_start": "2021-06-14",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "country_region_mapping",
+    "tab_id": 52
+  },
+  {
+    "description": "daily data from iSpot across Creative Wear",
+    "table_name": "cs_creative_wear_6937_ispot_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-10-02 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-10-20 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 53,
+    "actual_date_start": "2023-10-02",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from iSpot across Demographic View (P18-54)",
+    "table_name": "cs_demographic_view_6937_ispot_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-10-02 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-10-20 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 54,
+    "actual_date_start": "2023-10-02",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from iSpot across Household View",
+    "table_name": "cs_household_view_6937_ispot_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-10-02 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-10-20 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 55,
+    "actual_date_start": "2023-10-02",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "cs_national_conversions_6937_ispot_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-11-09 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-10-12 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 56,
+    "actual_date_start": "2023-10-12",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "cs_web_visit_conversions_6937_ispot_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-10-02 to 2023-12-26",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-10-20 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 57,
+    "actual_date_start": "2023-10-02",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from Facebook across Custom Conversions",
+    "table_name": "custom_conversions_6937_facebook_all_data",
+    "freshness_date": "2023-02-06",
+    "columns": [
+      {
+        "description": "values from 2023-01-30 to 2023-02-06",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-01-16 to 2023-02-06",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 58,
+    "actual_date_start": "2023-01-16",
+    "actual_date_end": "2023-02-06"
+  },
+  {
+    "description": "",
+    "table_name": "dim_meta_columns",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-12-28 to 2023-12-28",
+        "column_name": "column_updated_at",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 59,
+    "actual_date_start": "2023-12-28",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "dim_table_description",
+    "freshness_date": "2023-12-27",
+    "columns": [
+      {
+        "description": "values from 2022-09-21 to 2023-12-27",
+        "column_name": "schema_updated_at",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-09-21 to 2023-12-27",
+        "column_name": "metadata_modification_date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 60,
+    "actual_date_start": "2022-09-21",
+    "actual_date_end": "2023-12-27"
+  },
+  {
+    "description": "",
+    "table_name": "dim_table_freshness",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-01-02 to 2023-12-28",
+        "column_name": "freshness",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 61,
+    "actual_date_start": "2023-01-02",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "dma_region_by_ads_6937_facebook_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2020-02-10 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-03-10 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 62,
+    "actual_date_start": "2020-02-10",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "dma_region_custom_6937_ttd_api_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-05-18 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-01-01 to 2023-12-27",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 63,
+    "actual_date_start": "2023-01-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "last_day data from The Trade Desk Api across Entity Advertisers",
+    "table_name": "entity_advertisers_6937_ttd_api_all_data",
+    "freshness_date": "2023-03-09",
+    "columns": [
+      {
+        "description": "values from 2023-03-09 to 2023-03-09",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-03-09 to 2023-03-09",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 64,
+    "actual_date_start": "2023-03-09",
+    "actual_date_end": "2023-03-09"
+  },
+  {
+    "description": "daily data from Facebook across Entity Campaigns",
+    "table_name": "entity_campaigns_6937_facebook_all_data",
+    "freshness_date": "1970-01-01",
+    "columns": [
+      {
+        "description": "values from 1970-01-01 to 1970-01-01",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 1970-01-01 to 1970-01-01",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 65,
+    "actual_date_start": "1970-01-01",
+    "actual_date_end": "1970-01-01"
+  },
+  {
+    "description": "last_day data from The Trade Desk Api across Entity Campaigns",
+    "table_name": "entity_campaigns_6937_ttd_api_all_data",
+    "freshness_date": "2023-03-06",
+    "columns": [
+      {
+        "description": "values from 2023-03-06 to 2023-03-06",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-03-06 to 2023-03-06",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 66,
+    "actual_date_start": "2023-03-06",
+    "actual_date_end": "2023-03-06"
+  },
+  {
+    "description": "last_day data from The Trade Desk Api across Entity Creatives",
+    "table_name": "entity_creatives_6937_ttd_api_all_data",
+    "freshness_date": "2023-03-09",
+    "columns": [
+      {
+        "description": "values from 2023-03-09 to 2023-03-09",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-03-09 to 2023-03-09",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 67,
+    "actual_date_start": "2023-03-09",
+    "actual_date_end": "2023-03-09"
+  },
+  {
+    "description": "daily data from Google Ads across Geo Adgroups City",
+    "table_name": "geo_adgroups_city_6937_google_ads_ql_all_data",
+    "freshness_date": "2023-03-17",
+    "columns": [
+      {
+        "description": "values from 2023-03-03 to 2023-03-17",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-02-01 to 2023-03-16",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 68,
+    "actual_date_start": "2023-02-01",
+    "actual_date_end": "2023-03-17"
+  },
+  {
+    "description": "daily data from Google Ads across Geo Campaign Metro",
+    "table_name": "geo_campaign_metro_6937_google_ads_ql_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2020-06-01 to 2023-12-28",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-04-02 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 69,
+    "actual_date_start": "2020-06-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "daily data from The Trade Desk Api across Geo Campaigns",
+    "table_name": "geo_campaigns_6937_ttd_api_all_data",
+    "freshness_date": "2023-04-01",
+    "columns": [
+      {
+        "description": "values from 2023-03-06 to 2023-04-01",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-02-01 to 2023-03-30",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 70,
+    "actual_date_start": "2023-02-01",
+    "actual_date_end": "2023-04-01"
+  },
+  {
+    "description": "daily data from Bing Ads (Microsoft Advertising) across Geo Metroarea",
+    "table_name": "geo_metroarea_6937_bing_all_data",
+    "freshness_date": "2023-08-17",
+    "columns": [
+      {
+        "description": "values from 2023-07-25 to 2023-08-17",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-05-26 to 2023-08-17",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 71,
+    "actual_date_start": "2023-05-26",
+    "actual_date_end": "2023-08-17"
+  },
+  {
+    "description": "daily data from iSpot across Impressions by DMA",
+    "table_name": "impressions_dma_6937_ispot_all_data",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2023-09-01 to 2023-12-26",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-12-04 to 2023-12-28",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 72,
+    "actual_date_start": "2023-09-01",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "int_columns_value_range",
+    "tab_id": 73
+  },
+  {
+    "description": "",
+    "table_name": "int_meta_columns_incremental",
+    "freshness_date": "2023-12-27",
+    "columns": [
+      {
+        "description": "values from 2023-11-28 to 2023-12-27",
+        "column_name": "column_updated_at",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 74,
+    "actual_date_start": "2023-11-28",
+    "actual_date_end": "2023-12-27"
+  },
+  {
+    "description": "daily data from Twitter across Line Items",
+    "table_name": "line_items_6937_twitter_all_data",
+    "freshness_date": "2023-07-05",
+    "columns": [
+      {
+        "description": "values from 2023-05-30 to 2023-06-17",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-06-13 to 2023-07-05",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 75,
+    "actual_date_start": "2023-05-30",
+    "actual_date_end": "2023-07-05"
+  },
+  {
+    "description": "daily data from Twitter across Line Items Device",
+    "table_name": "line_items_device_6937_twitter_all_data",
+    "freshness_date": "2023-07-05",
+    "columns": [
+      {
+        "description": "values from 2023-06-13 to 2023-07-05",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-05-30 to 2023-07-05",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 76,
+    "actual_date_start": "2023-05-30",
+    "actual_date_end": "2023-07-05"
+  },
+  {
+    "description": "",
+    "table_name": "mcdm_mapping_fields",
+    "tab_id": 77
+  },
+  {
+    "description": "",
+    "table_name": "mcdm_mapping_report_types",
+    "tab_id": 78
+  },
+  {
+    "description": "",
+    "table_name": "mcdm_structure",
+    "tab_id": 79
+  },
+  {
+    "description": "",
+    "table_name": "mcdm_tables",
+    "tab_id": 80
+  },
+  {
+    "description": "daily data from Google Search Console across Page Analytics Full",
+    "table_name": "page_analytics_full_6937_gsc_all_data",
+    "freshness_date": "2023-11-13",
+    "columns": [
+      {
+        "description": "values from 2023-06-29 to 2023-11-10",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-07-13 to 2023-11-13",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 81,
+    "actual_date_start": "2023-06-29",
+    "actual_date_end": "2023-11-13"
+  },
+  {
+    "description": "daily data from Partnerize across Partner Clicks",
+    "table_name": "partner_clicks_6937_partnerize_all_data",
+    "freshness_date": "2023-10-12",
+    "columns": [
+      {
+        "description": "values from 2022-09-26 to 2023-10-12",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-07-28 to 2023-10-10",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 82,
+    "actual_date_start": "2022-07-28",
+    "actual_date_end": "2023-10-12"
+  },
+  {
+    "description": "daily data from Partnerize across Partner Conversions",
+    "table_name": "partner_conversions_6937_partnerize_all_data",
+    "freshness_date": "2023-01-02",
+    "columns": [
+      {
+        "description": "values from 2022-09-26 to 2023-01-02",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-07-28 to 2023-01-02",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 83,
+    "actual_date_start": "2022-07-28",
+    "actual_date_end": "2023-01-02"
+  },
+  {
+    "description": "daily data from Partnerize across Partner Impressions",
+    "table_name": "partner_impressions_6937_partnerize_all_data",
+    "freshness_date": "2023-01-02",
+    "columns": [
+      {
+        "description": "values from 2022-07-28 to 2023-01-02",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2022-09-26 to 2023-01-02",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 84,
+    "actual_date_start": "2022-07-28",
+    "actual_date_end": "2023-01-02"
+  },
+  {
+    "description": "weekly data from iSpot across Publisher Campaign Creative",
+    "table_name": "publisher_campaign_creative_6937_ispot_all_data",
+    "freshness_date": "2023-12-25",
+    "columns": [
+      {
+        "description": "values from 2023-03-22 to 2023-12-25",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-05-30 to 2023-12-25",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 85,
+    "actual_date_start": "2022-05-30",
+    "actual_date_end": "2023-12-25"
+  },
+  {
+    "description": "weekly data from iSpot across Publisher Lift",
+    "table_name": "publisher_lift_6937_ispot_all_data",
+    "freshness_date": "2023-12-25",
+    "columns": [
+      {
+        "description": "values from 2022-02-28 to 2023-12-25",
+        "column_name": "date",
+        "type": "Date"
+      },
+      {
+        "description": "values from 2023-03-27 to 2023-12-25",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 86,
+    "actual_date_start": "2022-02-28",
+    "actual_date_end": "2023-12-25"
+  },
+  {
+    "description": "daily data from The Trade Desk Api across Sites",
+    "table_name": "sites_6937_ttd_api_all_data",
+    "freshness_date": "2023-03-22",
+    "columns": [
+      {
+        "description": "values from 2023-03-07 to 2023-03-22",
+        "column_name": "__insert_date",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2023-02-01 to 2023-03-20",
+        "column_name": "date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 87,
+    "actual_date_start": "2023-02-01",
+    "actual_date_end": "2023-03-22"
+  },
+  {
+    "description": "",
+    "table_name": "skip_columns_6937",
+    "freshness_date": "2023-12-04",
+    "columns": [
+      {
+        "description": "values from 2022-09-21 to 2023-12-04",
+        "column_name": "created_at",
+        "type": "DateTime"
+      }
+    ],
+    "tab_id": 88,
+    "actual_date_start": "2022-09-21",
+    "actual_date_end": "2023-12-04"
+  },
+  {
+    "description": "",
+    "table_name": "stg_account_name_mapping",
+    "tab_id": 89
+  },
+  {
+    "description": "",
+    "table_name": "stg_customer_system_columns",
+    "tab_id": 90
+  },
+  {
+    "description": "",
+    "table_name": "stg_customer_system_tables",
+    "freshness_date": "2023-12-27",
+    "columns": [
+      {
+        "description": "values from 2022-09-21 to 2023-12-27",
+        "column_name": "schema_updated_at",
+        "type": "DateTime"
+      },
+      {
+        "description": "values from 2022-09-21 to 2023-12-27",
+        "column_name": "metadata_modification_date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 91,
+    "actual_date_start": "2022-09-21",
+    "actual_date_end": "2023-12-27"
+  },
+  {
+    "description": "",
+    "table_name": "stg_mcdm_column_description",
+    "tab_id": 92
+  },
+  {
+    "description": "",
+    "table_name": "stg_mcdm_mapping_fields",
+    "tab_id": 93
+  },
+  {
+    "description": "",
+    "table_name": "stg_report_accounts",
+    "tab_id": 94
+  },
+  {
+    "description": "",
+    "table_name": "stg_rows_stats",
+    "freshness_date": "2023-12-28",
+    "columns": [
+      {
+        "description": "values from 2022-12-12 to 2023-12-28",
+        "column_name": "freshness",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 95,
+    "actual_date_start": "2022-12-12",
+    "actual_date_end": "2023-12-28"
+  },
+  {
+    "description": "",
+    "table_name": "stg_tables_freshness_6937",
+    "freshness_date": "2023-08-21",
+    "columns": [
+      {
+        "description": "values from 2023-01-02 to 2023-08-21",
+        "column_name": "freshness_date",
+        "type": "Date"
+      }
+    ],
+    "tab_id": 96,
+    "actual_date_start": "2023-01-02",
+    "actual_date_end": "2023-08-21"
+  }
+]
+</data_source>
+
